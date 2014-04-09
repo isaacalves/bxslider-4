@@ -1085,14 +1085,17 @@
 		 */
 		var setupKeyboard = function(){
 		     $(document).keydown(function(e){
-		         if (e.keyCode == 39) {
-		             if (slider.settings.keyboardEnabled)
-		             	clickNextBind(e);
+		         if (e.keyCode == 39 && slider.settings.mode != 'vertical') {
+		             if (slider.settings.keyboardEnabled) clickNextBind(e);
 		             return false;
-		         }
-		         else if (e.keyCode == 37) {
-		             if (slider.settings.keyboardEnabled)
-		             	clickPrevBind(e);
+		         } else if (e.keyCode == 37 && slider.settings.mode != 'vertical') {
+		             if (slider.settings.keyboardEnabled) clickPrevBind(e);
+		             return false;
+		         } else if (e.keyCode == 40 && slider.settings.mode != 'horizontal') {
+		             if (slider.settings.keyboardEnabled) clickNextBind(e);
+		             return false;
+		         } else if (e.keyCode == 38 && slider.settings.mode != 'horizontal') {
+		             if (slider.settings.keyboardEnabled) clickPrevBind(e);
 		             return false;
 		         }
 		     });
