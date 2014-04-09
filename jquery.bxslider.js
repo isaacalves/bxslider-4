@@ -60,6 +60,7 @@
 		stopText: 'Stop',
 		autoControlsCombine: false,
 		autoControlsSelector: null,
+		keyboardEnabled: false,
 
 		// AUTO
 		auto: false,
@@ -317,6 +318,8 @@
 			if (slider.settings.controls) updateDirectionControls();
 			// if touchEnabled is true, setup the touch events
 			if (slider.settings.touchEnabled && !slider.settings.ticker) initTouch();
+			// setup the keyboard events
+			setupKeyboard();
 		}
 
 		/**
@@ -1078,6 +1081,23 @@
 		}
 
 		/**
+		 * Setup keyboard navigation
+		 */
+		var setupKeyboard = function(){
+		     $(document).keydown(function(e){
+		         if (e.keyCode == 39) {
+		             if (slider.settings.keyboardEnabled)
+		             	clickNextBind(e);
+		             return false;
+		         }
+		         else if (e.keyCode == 37) {
+		             if (slider.settings.keyboardEnabled)
+		             	clickPrevBind(e);
+		             return false;
+		         }
+		     });
+		}
+		/**
 		 * ===================================================================================
 		 * = PUBLIC FUNCTIONS
 		 * ===================================================================================
@@ -1305,6 +1325,14 @@
 			el.destroySlider();
 			init();
 		}
+
+		/**
+		 * Toggle keyboard navigation on/off. You can force by sending a boolean parameter (true to enable, false to disable)
+		 */
+	el.toggleKeyboard = function(shouldEnable){
+		if(!slider.initialized) return;
+		slider.settings.keyboardEnabled = (shouldEnable == undefined) ? !slider.settings.keyboardEnabled : shouldEnable;
+	}
 
 		init();
 
